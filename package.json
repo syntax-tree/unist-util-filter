@@ -1,0 +1,31 @@
+{
+  "name": "unist-util-filter",
+  "version": "0.0.0",
+  "description": "Create a new Unist tree with all nodes that pass the test implemented by the provided function",
+  "author": "Eugene Sharygin <eush77@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/eush77/unist-util-filter",
+  "repository": "eush77/unist-util-filter",
+  "bugs": {
+    "url": "https://github.com/eush77/unist-util-filter/issues"
+  },
+  "keywords": [
+    "ast",
+    "clone",
+    "filter",
+    "immutable",
+    "node",
+    "test",
+    "tree",
+    "unist",
+    "util"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}
