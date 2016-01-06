@@ -3,7 +3,14 @@
 var flatmap = require('flatmap');
 
 
-module.exports = function (ast, predicate, context, opts) {
+module.exports = function (ast, opts, predicate, context) {
+  if (typeof opts == 'function') {
+    context = predicate;
+    predicate = opts;
+    opts = {};
+  }
+  opts.cascade = opts.cascade || opts.cascade === undefined;
+
   return (function preorder (node, index, parent) {
     if (!predicate.call(context, node, index, parent)) {
       return null;
@@ -21,7 +28,7 @@ module.exports = function (ast, predicate, context, opts) {
         return preorder(child, index, node);
       });
 
-      if (!newNode.children.length) {
+      if (!newNode.children.length && opts.cascade) {
         return null;
       }
     }

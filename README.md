@@ -75,7 +75,7 @@ filter(ast, (node) => node.type != 'leaf' || node.value % 2 == 0)
 
 ## API
 
-### `filter(ast, predicate, [context], [opts])`
+### `filter(ast, [opts], predicate, [context])`
 
 - `ast` — [Unist] tree.
 - `predicate` — Function to test each node. Invoked with arguments `(node, index?, parent?)`. Return `true` to keep the node, `false` otherwise.
