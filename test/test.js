@@ -121,3 +121,25 @@ it('should call iterator in a context passed in as the last arg', function (t) {
 
   t.end();
 });
+
+
+it('should support type and node tests', function (t) {
+  var ast = u('node', [
+    u('node', [
+      u('leaf', 1)
+    ]),
+    u('leaf', 2)
+  ]);
+
+  t.equal(filter(ast, 'node'), null);
+
+  t.deepEqual(filter(ast, { cascade: false }, 'node'), u('node', [
+    u('node', [])
+  ]));
+  t.equal(filter(ast, { cascade: false }, 'leaf'), null);
+
+  t.deepEqual(filter(ast, { cascade: false }, ast), u('node', []));
+  t.equal(filter(ast, { cascade: false }, ast.children[0]), null);
+
+  t.end();
+});
