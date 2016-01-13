@@ -112,17 +112,6 @@ it('should call iterator with `index` and `parent` args', function (t) {
 });
 
 
-it('should call iterator in a context passed in as the last arg', function (t) {
-  var context = Object.create(null);
-
-  filter(u('root'), function () {
-    t.equal(this, context);
-  }, context);
-
-  t.end();
-});
-
-
 it('should support type and node tests', function (t) {
   var ast = u('node', [
     u('node', [

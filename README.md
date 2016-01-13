@@ -76,11 +76,10 @@ filter(ast, (node) => node.type != 'leaf' || node.value % 2 == 0)
 
 ## API
 
-### `filter(ast, [opts], predicate, [context])`
+### `filter(ast, [opts], predicate)`
 
 - `ast` — [Unist] tree.
 - `predicate` — Function invoked with arguments `(node, index?, parent?)` or string (type test) or node (identity test) to test each node. See [unist-util-is] for details. In a function form, return `true` to keep the node, `false` otherwise.
-- `context` — Optional. Value to use as `this` when executing `predicate`.
 
 Executes `predicate` for each node in preorder tree traversal. Returns a new tree (or `null`) with nodes for which `predicate` returned `true`.
 

@@ -4,16 +4,15 @@ var flatmap = require('flatmap'),
     is = require('unist-util-is');
 
 
-module.exports = function (ast, opts, predicate, context) {
+module.exports = function (ast, opts, predicate) {
   if (arguments.length == 2) {
-    context = predicate;
     predicate = opts;
     opts = {};
   }
   opts.cascade = opts.cascade || opts.cascade === undefined;
 
   return (function preorder (node, index, parent) {
-    if (!is(predicate, node, index, parent, context)) {
+    if (!is(predicate, node, index, parent)) {
       return null;
     }
 
