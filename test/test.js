@@ -84,6 +84,23 @@ it('should cascade remove parent nodes', function (t) {
 });
 
 
+it('should not cascade-remove nodes that were empty initially', function (t) {
+  var ast = u('node', [
+    u('node', []),
+    u('node', [
+      u('leaf')
+    ])
+  ]);
+
+  ast = filter(ast, 'node');
+
+  t.deepEqual(ast, u('node', [
+    u('node', [])
+  ]));
+  t.end();
+});
+
+
 it('should call iterator with `index` and `parent` args', function (t) {
   var ast = u('root', [
     u('node', [

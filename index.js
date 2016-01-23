@@ -28,7 +28,7 @@ module.exports = function (ast, opts, predicate) {
         return preorder(child, index, node);
       });
 
-      if (!newNode.children.length && opts.cascade) {
+      if (opts.cascade && !newNode.children.length && node.children.length) {
         return null;
       }
     }
