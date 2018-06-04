@@ -1,38 +1,52 @@
-'use strict';
+'use strict'
 
-var flatmap = require('flatmap'),
-    is = require('unist-util-is');
+var flatmap = require('flatmap')
+var is = require('unist-util-is')
 
+module.exports = filter
 
-module.exports = function (ast, opts, predicate) {
-  if (arguments.length == 2) {
-    predicate = opts;
-    opts = {};
+function filter(tree, opts, test) {
+  var cascade
+
+  if (!test) {
+    test = opts
+    opts = {}
   }
-  opts.cascade = opts.cascade || opts.cascade === undefined;
 
-  return (function preorder (node, index, parent) {
-    if (!is(predicate, node, index, parent)) {
-      return null;
+  cascade = opts.cascade
+  cascade = cascade === null || cascade === undefined ? true : cascade
+
+  return preorder(tree, null, null)
+
+  function preorder(node, index, parent) {
+    var next
+
+    if (!is(test, node, index, parent)) {
+      return null
     }
 
-    var newNode = Object.keys(node).reduce(function (acc, key) {
-      if (key != 'children') {
-        acc[key] = node[key];
-      }
-      return acc;
-    }, {});
+    next = Object.keys(node).reduce(reduce, {})
 
     if (node.children) {
-      newNode.children = flatmap(node.children, function (child, index) {
-        return preorder(child, index, node);
-      });
+      next.children = flatmap(node.children, map)
 
-      if (opts.cascade && !newNode.children.length && node.children.length) {
-        return null;
+      if (cascade && node.children.length !== 0 && next.children.length === 0) {
+        return null
       }
     }
 
-    return newNode;
-  }(ast, null, null));
-};
+    return next
+
+    function reduce(acc, key) {
+      if (key !== 'children') {
+        acc[key] = node[key]
+      }
+
+      return acc
+    }
+
+    function map(child, index) {
+      return preorder(child, index, node)
+    }
+  }
+}
