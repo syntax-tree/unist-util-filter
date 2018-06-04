@@ -96,6 +96,18 @@ If `true`, don't keep empty composite nodes.
 npm install unist-util-filter
 ```
 
+## Contribute
+
+See [`contributing.md` in `syntax-tree/unist`][contributing] for ways to get
+started.
+
+This organisation has a [Code of Conduct][coc].  By interacting with this
+repository, organisation, or community you agree to abide by its terms.
+
 ## License
 
 MIT
+
+[contributing]: https://github.com/syntax-tree/unist/blob/master/contributing.md
+
+[coc]: https://github.com/syntax-tree/unist/blob/master/code-of-conduct.md
