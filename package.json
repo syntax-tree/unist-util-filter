@@ -2,19 +2,7 @@
   "name": "unist-util-filter",
   "version": "0.2.1",
   "description": "Create a new Unist tree with all nodes that pass the test implemented by the provided function",
-  "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "test": "tape test/*.js"
-  },
-  "files": [
-    "index.js"
-  ],
-  "homepage": "https://github.com/eush77/unist-util-filter",
-  "repository": "eush77/unist-util-filter",
-  "bugs": {
-    "url": "https://github.com/eush77/unist-util-filter/issues"
-  },
   "keywords": [
     "ast",
     "clone",
@@ -26,6 +14,16 @@
     "unist",
     "util"
   ],
+  "repository": "eush77/unist-util-filter",
+  "bugs": "https://github.com/eush77/unist-util-filter/issues",
+  "author": "Eugene Sharygin <eush77@gmail.com>",
+  "contributors": [
+    "Eugene Sharygin <eush77@gmail.com>",
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "flatmap": "0.0.3",
     "unist-util-is": "^1.0.0"
@@ -34,5 +32,8 @@
     "tape": "^4.4.0",
     "unist-builder": "^1.0.0",
     "unist-util-select": "^1.3.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
   }
 }
