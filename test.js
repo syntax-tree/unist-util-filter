@@ -2,7 +2,6 @@
 
 var test = require('tape')
 var u = require('unist-builder')
-var select = require('unist-util-select')
 var filter = require('.')
 
 test('should not traverse into children of filtered out nodes', function(t) {
@@ -64,17 +63,13 @@ test('should call iterator with `index` and `parent` args', function(t) {
   t.deepEqual(filter(tree, predicate), tree)
 
   t.deepEqual(callLog, [
-    [$('root'), null, null],
-    [$('node'), 0, $('root')],
-    [$('node > leaf'), 0, $('node')],
-    [$('node + leaf'), 1, $('root')]
+    [tree, null, null],
+    [tree.children[0], 0, tree],
+    [tree.children[0].children[0], 0, tree.children[0]],
+    [tree.children[1], 1, tree]
   ])
 
   t.end()
-
-  function $() {
-    return select.bind(null, tree).apply(this, arguments)[0]
-  }
 
   function predicate() {
     callLog.push([].slice.call(arguments))
