@@ -1,8 +1,16 @@
-# unist-util-filter [![Build Status][build-badge]][build-page] [![Coverage Status][coverage-badge]][coverage-page]
+# unist-util-filter
 
-Create a new [unist][] tree with all nodes that pass the given test.
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+
+[**unist**][unist] utility to create a new tree with all nodes that pass the
+given test.
 
 ## Install
+
+[npm][]:
 
 ```sh
 npm install unist-util-filter
@@ -11,24 +19,18 @@ npm install unist-util-filter
 ## Usage
 
 ```js
-var filter = require('unist-util-filter');
+var u = require('unist-builder')
+var filter = require('unist-util-filter')
 
-var tree = {
-  type: 'root',
-  children: [
-    {type: 'leaf', value: '1'},
-    {
-      type: 'node',
-      children: [
-        {type: 'leaf', value: '2'},
-        {type: 'node', children: [{type: 'leaf', value: '3'}]}
-      ]
-    },
-    {type: 'leaf', value: '4'}
-  ]
-}
+var tree = u('root', [
+  u('leaf', '1'),
+  u('node', [u('leaf', '2'), u('node', [u('leaf', '3')])]),
+  u('leaf', '4')
+])
 
-console.log(filter(tree, node => node.type != 'leaf' || node.value % 2 == 0))
+var newTree = filter(tree, node => node.type !== 'leaf' || node.value % 2 === 0)
+
+console.dir(newTree, {depth: null})
 ```
 
 Yields:
@@ -37,64 +39,87 @@ Yields:
 {
   type: 'root',
   children: [
-    {type: 'node', children: [{type: 'leaf', value: '2'}]},
-    {type: 'leaf', value: '4'}
+    { type: 'node', children: [ { type: 'leaf', value: '2' } ] },
+    { type: 'leaf', value: '4' }
   ]
 }
 ```
 
 ## API
 
-### `filter(tree, [opts], test)`
+### `filter(tree[, options][, test])`
 
-Creates a copy of `tree` consisting of all nodes that pass `test`.
-The tree is filtered in [preorder][].
+Create a new [tree][] consisting of copies of all nodes that pass `test`.
+The tree is walked in [preorder][] (NLR), visiting the node itself, then its
+[head][], etc.
 
 ###### Parameters
 
 *   `tree` ([`Node?`][node])
-    — Tree to filter
-*   `opts.cascade` (`boolean`, default: `true`)
-    — Whether to drop parent nodes if they had children, but all their
-    children were filtered out
-*   `test`
-    — See [`unist-util-is`][is] for details
+    — [Tree][] to filter
+*   `options.cascade` (`boolean`, default: `true`)
+    — Whether to drop parent nodes if they had children, but all their children
+    were filtered out
+*   `test` ([`Test`][is], optional) — [`is`][is]-compatible test (such as a
+    [type][])
 
 ###### Returns
 
-A new tree ([`Node?`][node]) with nodes for which `test` returned `true`.
+[`Node?`][node] — New filtered [tree][].
 `null` is returned if `tree` itself didn’t pass the test, or is cascaded away.
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/unist`][contributing] for ways to get
+See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
 started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
-[MIT][] © Eugene Sharygin
+[MIT][license] © Eugene Sharygin
 
-[mit]: license
+<!-- Definitions -->
+
+[build-badge]: https://img.shields.io/travis/syntax-tree/unist-util-find-all-after.svg
+
+[build]: https://travis-ci.org/syntax-tree/unist-util-find-all-after
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/unist-util-find-all-after.svg
+
+[coverage]: https://codecov.io/github/syntax-tree/unist-util-find-all-after
+
+[downloads-badge]: https://img.shields.io/npm/dm/unist-util-find-all-after.svg
+
+[downloads]: https://www.npmjs.com/package/unist-util-find-all-after
+
+[size-badge]: https://img.shields.io/bundlephobia/minzip/unist-util-find-all-after.svg
+
+[size]: https://bundlephobia.com/result?p=unist-util-find-all-after
+
+[npm]: https://docs.npmjs.com/cli/install
+
+[license]: license
 
 [unist]: https://github.com/syntax-tree/unist
 
 [node]: https://github.com/syntax-tree/unist#node
 
+[tree]: https://github.com/syntax-tree/unist#tree
+
+[preorder]: https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
+
+[head]: https://github.com/syntax-tree/unist#head
+
+[type]: https://github.com/syntax-tree/unist#type
+
 [is]: https://github.com/syntax-tree/unist-util-is
 
-[preorder]: https://en.wikipedia.org/wiki/Tree_traversal
+[contributing]: https://github.com/syntax-tree/.github/blob/master/contributing.md
 
-[build-page]: https://travis-ci.org/syntax-tree/unist-util-filter
+[support]: https://github.com/syntax-tree/.github/blob/master/support.md
 
-[build-badge]: https://travis-ci.org/syntax-tree/unist-util-filter.svg?branch=master
-
-[coverage-page]: https://codecov.io/github/syntax-tree/unist-util-filter?branch=master
-
-[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/unist-util-filter.svg?branch=master
-
-[contributing]: https://github.com/syntax-tree/unist/blob/master/contributing.md
-
-[coc]: https://github.com/syntax-tree/unist/blob/master/code-of-conduct.md
+[coc]: https://github.com/syntax-tree/.github/blob/master/code-of-conduct.md
