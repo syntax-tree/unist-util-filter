@@ -84,21 +84,21 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/syntax-tree/unist-util-find-all-after.svg
+[build-badge]: https://img.shields.io/travis/syntax-tree/unist-util-filter.svg
 
-[build]: https://travis-ci.org/syntax-tree/unist-util-find-all-after
+[build]: https://travis-ci.org/syntax-tree/unist-util-filter
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/unist-util-find-all-after.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/unist-util-filter.svg
 
-[coverage]: https://codecov.io/github/syntax-tree/unist-util-find-all-after
+[coverage]: https://codecov.io/github/syntax-tree/unist-util-filter
 
-[downloads-badge]: https://img.shields.io/npm/dm/unist-util-find-all-after.svg
+[downloads-badge]: https://img.shields.io/npm/dm/unist-util-filter.svg
 
-[downloads]: https://www.npmjs.com/package/unist-util-find-all-after
+[downloads]: https://www.npmjs.com/package/unist-util-filter
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/unist-util-find-all-after.svg
+[size-badge]: https://img.shields.io/bundlephobia/minzip/unist-util-filter.svg
 
-[size]: https://bundlephobia.com/result?p=unist-util-find-all-after
+[size]: https://bundlephobia.com/result?p=unist-util-filter
 
 [npm]: https://docs.npmjs.com/cli/install
 
