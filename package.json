@@ -1,6 +1,6 @@
 {
   "name": "unist-util-filter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create a new Unist tree with all nodes that pass the test implemented by the provided function",
   "license": "MIT",
   "keywords": [
