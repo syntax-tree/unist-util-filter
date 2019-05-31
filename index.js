@@ -1,11 +1,12 @@
 'use strict'
 
 var flatmap = require('flatmap')
-var is = require('unist-util-is')
+var convert = require('unist-util-is/convert')
 
 module.exports = filter
 
 function filter(tree, opts, test) {
+  var is
   var cascade
 
   if (!test) {
@@ -15,13 +16,14 @@ function filter(tree, opts, test) {
 
   cascade = opts.cascade
   cascade = cascade === null || cascade === undefined ? true : cascade
+  is = convert(test)
 
   return preorder(tree, null, null)
 
   function preorder(node, index, parent) {
     var next
 
-    if (!is(test, node, index, parent)) {
+    if (!is(node, index, parent)) {
       return null
     }
 
