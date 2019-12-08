@@ -1,7 +1,7 @@
 {
   "name": "unist-util-filter",
   "version": "2.0.0",
-  "description": "Create a new Unist tree with all nodes that pass the test implemented by the provided function",
+  "description": "Create a new unist tree with all nodes that pass the test implemented by the provided function",
   "license": "MIT",
   "keywords": [
     "ast",
@@ -14,8 +14,8 @@
     "unist",
     "util"
   ],
-  "repository": "eush77/unist-util-filter",
-  "bugs": "https://github.com/eush77/unist-util-filter/issues",
+  "repository": "syntax-tree/unist-util-filter",
+  "bugs": "https://github.com/syntax-tree/unist-util-filter/issues",
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "contributors": [
     "Eugene Sharygin <eush77@gmail.com>",
