@@ -28,6 +28,7 @@
   ],
   "types": "types/index.d.ts",
   "dependencies": {
+    "@types/unist": "^2.0.3",
     "flatmap": "0.0.3",
     "unist-util-is": "^4.0.0"
   },
