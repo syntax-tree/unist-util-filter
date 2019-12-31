@@ -20,7 +20,8 @@
   "contributors": [
     "Eugene Sharygin <eush77@gmail.com>",
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
-    "Christian Murphy <christian.murphy.42@gmail.com>"
+    "Christian Murphy <christian.murphy.42@gmail.com>",
+    "Buzurgmehr Arjmandi <buzurg.arjmandi@gmail.com>"
   ],
   "files": [
     "index.js",
@@ -28,6 +29,7 @@
   ],
   "types": "types/index.d.ts",
   "dependencies": {
+    "@types/unist": "^2.0.3",
     "flatmap": "0.0.3",
     "unist-util-is": "^4.0.0"
   },
