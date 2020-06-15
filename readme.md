@@ -71,6 +71,21 @@ The tree is walked in [preorder][] (NLR), visiting the node itself, then its
 [`Node?`][node] — New filtered [tree][].
 `null` is returned if `tree` itself didn’t pass the test, or is cascaded away.
 
+## Related
+
+*   [`unist-util-visit`](https://github.com/syntax-tree/unist-util-visit)
+    — Recursively walk over nodes
+*   [`unist-util-visit-parents`](https://github.com/syntax-tree/unist-util-visit-parents)
+    — Like `visit`, but with a stack of parents
+*   [`unist-util-map`](https://github.com/syntax-tree/unist-util-map)
+    — Create a new tree with all nodes mapped by a given function
+*   [`unist-util-flatmap`](https://gitlab.com/staltz/unist-util-flatmap)
+    — Create a new tree by mapping (to an array) by a given function
+*   [`unist-util-remove`](https://github.com/syntax-tree/unist-util-remove)
+    — Remove nodes from a tree that pass a test
+*   [`unist-util-select`](https://github.com/syntax-tree/unist-util-select)
+    — Select nodes with CSS-like selectors
+
 ## Contribute
 
 See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
