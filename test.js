@@ -4,7 +4,7 @@ var test = require('tape')
 var u = require('unist-builder')
 var filter = require('.')
 
-test('should not traverse into children of filtered out nodes', function(t) {
+test('should not traverse into children of filtered out nodes', function (t) {
   var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
   var types = {}
 
@@ -19,7 +19,7 @@ test('should not traverse into children of filtered out nodes', function(t) {
   }
 })
 
-test('should return `null` if root node is filtered out', function(t) {
+test('should return `null` if root node is filtered out', function (t) {
   var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(filter(tree, predicate), null)
@@ -31,7 +31,7 @@ test('should return `null` if root node is filtered out', function(t) {
   }
 })
 
-test('should cascade-remove parent nodes', function(t) {
+test('should cascade-remove parent nodes', function (t) {
   var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(filter(tree, notOne), u('root', [u('leaf', '2')]))
@@ -48,7 +48,7 @@ test('should cascade-remove parent nodes', function(t) {
   }
 })
 
-test('should not cascade-remove nodes that were empty initially', function(t) {
+test('should not cascade-remove nodes that were empty initially', function (t) {
   var tree = u('node', [u('node', []), u('node', [u('leaf')])])
 
   t.deepEqual(filter(tree, 'node'), u('node', [u('node', [])]))
@@ -56,7 +56,7 @@ test('should not cascade-remove nodes that were empty initially', function(t) {
   t.end()
 })
 
-test('should call iterator with `index` and `parent` args', function(t) {
+test('should call iterator with `index` and `parent` args', function (t) {
   var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
   var callLog = []
 
@@ -77,7 +77,7 @@ test('should call iterator with `index` and `parent` args', function(t) {
   }
 })
 
-test('should support type and node tests', function(t) {
+test('should support type and node tests', function (t) {
   var tree = u('node', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(filter(tree, 'node'), null)
@@ -90,7 +90,7 @@ test('should support type and node tests', function(t) {
   t.end()
 })
 
-test('opts.cascade', function(t) {
+test('opts.cascade', function (t) {
   var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(
@@ -112,7 +112,7 @@ test('opts.cascade', function(t) {
   }
 })
 
-test('example from README', function(t) {
+test('example from README', function (t) {
   var tree = u('root', [
     u('leaf', '1'),
     u('node', [u('leaf', '2'), u('node', [u('leaf', '3')])]),
