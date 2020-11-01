@@ -32,7 +32,7 @@ function filter(tree, options, test) {
     if (node.children) {
       next.children = flatmap(node.children, map)
 
-      if (cascade && node.children.length !== 0 && next.children.length === 0) {
+      if (cascade && node.children.length > 0 && next.children.length === 0) {
         return null
       }
     }
