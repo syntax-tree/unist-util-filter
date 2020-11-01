@@ -1,54 +1,51 @@
 'use strict'
 
-var flatmap = require('flatmap')
 var convert = require('unist-util-is/convert')
 
 module.exports = filter
 
+var own = {}.hasOwnProperty
+
 function filter(tree, options, test) {
-  var is
-  var cascade
-
-  if (!test) {
-    test = options
-    options = {}
-  }
-
-  cascade = options.cascade
-  cascade = cascade === null || cascade === undefined ? true : cascade
-  is = convert(test)
+  var is = convert(test || options)
+  var cascade = options.cascade == null ? true : options.cascade
 
   return preorder(tree, null, null)
 
   function preorder(node, index, parent) {
+    var children
+    var childIndex
+    var result
     var next
+    var key
 
-    if (!is(node, index, parent)) {
-      return null
-    }
-
-    next = Object.keys(node).reduce(reduce, {})
+    if (!is(node, index, parent)) return null
 
     if (node.children) {
-      next.children = flatmap(node.children, map)
+      children = []
+      childIndex = -1
 
-      if (cascade && node.children.length > 0 && next.children.length === 0) {
-        return null
+      while (++childIndex < node.children.length) {
+        result = preorder(node.children[childIndex], childIndex, node)
+
+        if (result) {
+          children.push(result)
+        }
+      }
+
+      if (cascade && node.children.length && !children.length) return null
+    }
+
+    // Create a shallow clone, using the new children.
+    next = {}
+
+    for (key in node) {
+      /* istanbul ignore else - Prototype injection. */
+      if (own.call(node, key)) {
+        next[key] = key === 'children' ? children : node[key]
       }
     }
 
     return next
-
-    function reduce(acc, key) {
-      if (key !== 'children') {
-        acc[key] = node[key]
-      }
-
-      return acc
-    }
-
-    function map(child, index) {
-      return preorder(child, index, node)
-    }
   }
 }

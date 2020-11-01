@@ -30,7 +30,6 @@
   ],
   "types": "types/index.d.ts",
   "dependencies": {
-    "flatmap": "0.0.3",
     "unist-util-is": "^4.0.0"
   },
   "devDependencies": {
@@ -69,8 +68,15 @@
     "prettier": true,
     "esnext": false,
     "rules": {
-      "unicorn/no-fn-reference-in-iterator": "off",
-      "unicorn/no-reduce": "off"
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "ignore"
+        }
+      ],
+      "no-eq-null": "off",
+      "unicorn/explicit-length-check": "off"
     },
     "ignores": [
       "unist-util-position.js"
