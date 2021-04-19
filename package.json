@@ -1,6 +1,6 @@
 {
   "name": "unist-util-filter",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "unist utility to create a new tree with nodes that pass a filter",
   "license": "MIT",
   "keywords": [
