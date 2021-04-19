@@ -1,14 +1,13 @@
-'use strict'
-
-var convert = require('unist-util-is/convert')
-
-module.exports = filter
+import {convert} from 'unist-util-is'
 
 var own = {}.hasOwnProperty
 
-function filter(tree, options, test) {
+export function filter(tree, options, test) {
   var is = convert(test || options)
-  var cascade = options.cascade == null ? true : options.cascade
+  var cascade =
+    options.cascade === undefined || options.cascade === null
+      ? true
+      : options.cascade
 
   return preorder(tree, null, null)
 

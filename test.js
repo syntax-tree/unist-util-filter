@@ -1,8 +1,6 @@
-'use strict'
-
-var test = require('tape')
-var u = require('unist-builder')
-var filter = require('.')
+import test from 'tape'
+import {u} from 'unist-builder'
+import {filter} from './index.js'
 
 test('should not traverse into children of filtered out nodes', function (t) {
   var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
