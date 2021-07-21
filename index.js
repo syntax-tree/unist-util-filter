@@ -16,7 +16,7 @@ import {convert} from 'unist-util-is'
  * @property {boolean} [cascade=true] Whether to drop parent nodes if they had children, but all their children were filtered out.
  */
 
-var own = {}.hasOwnProperty
+const own = {}.hasOwnProperty
 
 export const filter =
   /**
@@ -38,8 +38,8 @@ export const filter =
      * @returns {Node|null}
      */
     function (tree, options, test) {
-      var is = convert(test || options)
-      var cascade =
+      const is = convert(test || options)
+      const cascade =
         options.cascade === undefined || options.cascade === null
           ? true
           : options.cascade
@@ -54,15 +54,13 @@ export const filter =
        */
       function preorder(node, index, parent) {
         /** @type {Array.<Node>} */
-        var children = []
+        const children = []
         /** @type {number} */
-        var childIndex
+        let childIndex
         /** @type {Node} */
-        var result
-        /** @type {typeof node} */
-        var next
+        let result
         /** @type {string} */
-        var key
+        let key
 
         if (!is(node, index, parent)) return null
 
@@ -81,12 +79,14 @@ export const filter =
           }
 
           // @ts-ignore Looks like a parent.
-          if (cascade && node.children.length && !children.length) return null
+          if (cascade && node.children.length > 0 && children.length === 0)
+            return null
         }
 
         // Create a shallow clone, using the new children.
+        /** @type {typeof node} */
         // @ts-ignore all the fields will be copied over.
-        next = {}
+        const next = {}
 
         for (key in node) {
           /* istanbul ignore else - Prototype injection. */

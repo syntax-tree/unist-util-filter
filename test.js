@@ -7,9 +7,9 @@ import test from 'tape'
 import {u} from 'unist-builder'
 import {filter} from './index.js'
 
-test('should not traverse into children of filtered out nodes', function (t) {
-  var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
-  var types = {}
+test('should not traverse into children of filtered out nodes', (t) => {
+  const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
+  const types = {}
 
   t.deepEqual(filter(tree, predicate), u('root', [u('leaf', '2')]))
   t.deepEqual(types, {root: 1, node: 1, leaf: 1})
@@ -25,8 +25,8 @@ test('should not traverse into children of filtered out nodes', function (t) {
   }
 })
 
-test('should return `null` if root node is filtered out', function (t) {
-  var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
+test('should return `null` if root node is filtered out', (t) => {
+  const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(filter(tree, predicate), null)
 
@@ -37,8 +37,8 @@ test('should return `null` if root node is filtered out', function (t) {
   }
 })
 
-test('should cascade-remove parent nodes', function (t) {
-  var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
+test('should cascade-remove parent nodes', (t) => {
+  const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(filter(tree, notOne), u('root', [u('leaf', '2')]))
   t.deepEqual(filter(tree, notLeaf), null)
@@ -61,18 +61,18 @@ test('should cascade-remove parent nodes', function (t) {
   }
 })
 
-test('should not cascade-remove nodes that were empty initially', function (t) {
-  var tree = u('node', [u('node', []), u('node', [u('leaf')])])
+test('should not cascade-remove nodes that were empty initially', (t) => {
+  const tree = u('node', [u('node', []), u('node', [u('leaf')])])
 
   t.deepEqual(filter(tree, 'node'), u('node', [u('node', [])]))
 
   t.end()
 })
 
-test('should call iterator with `index` and `parent` args', function (t) {
-  var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
+test('should call iterator with `index` and `parent` args', (t) => {
+  const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
   /** @type {Array.<[Node, number|undefined, Parent|undefined]>} */
-  var callLog = []
+  const callLog = []
 
   t.deepEqual(filter(tree, predicate), tree)
 
@@ -92,8 +92,8 @@ test('should call iterator with `index` and `parent` args', function (t) {
   }
 })
 
-test('should support type and node tests', function (t) {
-  var tree = u('node', [u('node', [u('leaf', '1')]), u('leaf', '2')])
+test('should support type and node tests', (t) => {
+  const tree = u('node', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(filter(tree, 'node'), null)
   t.deepEqual(
@@ -105,8 +105,8 @@ test('should support type and node tests', function (t) {
   t.end()
 })
 
-test('opts.cascade', function (t) {
-  var tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
+test('opts.cascade', (t) => {
+  const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
   t.deepEqual(
     filter(tree, {cascade: true}, predicate),
@@ -130,8 +130,8 @@ test('opts.cascade', function (t) {
   }
 })
 
-test('example from README', function (t) {
-  var tree = u('root', [
+test('example from README', (t) => {
+  const tree = u('root', [
     u('leaf', '1'),
     u('node', [u('leaf', '2'), u('node', [u('leaf', '3')])]),
     u('leaf', '4')

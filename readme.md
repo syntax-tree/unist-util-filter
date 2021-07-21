@@ -28,13 +28,13 @@ npm install unist-util-filter
 import {u} from 'unist-builder'
 import {filter} from 'unist-util-filter'
 
-var tree = u('root', [
+const tree = u('root', [
   u('leaf', '1'),
   u('node', [u('leaf', '2'), u('node', [u('leaf', '3')])]),
   u('leaf', '4')
 ])
 
-var newTree = filter(tree, node => node.type !== 'leaf' || node.value % 2 === 0)
+const newTree = filter(tree, node => node.type !== 'leaf' || node.value % 2 === 0)
 
 console.dir(newTree, {depth: null})
 ```
