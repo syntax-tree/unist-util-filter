@@ -9,6 +9,7 @@ import {filter} from './index.js'
 
 test('should not traverse into children of filtered out nodes', (t) => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
+  /** @type {Record<string, number>} */
   const types = {}
 
   t.deepEqual(filter(tree, predicate), u('root', [u('leaf', '2')]))
@@ -71,25 +72,26 @@ test('should not cascade-remove nodes that were empty initially', (t) => {
 
 test('should call iterator with `index` and `parent` args', (t) => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
-  /** @type {Array.<[Node, number|undefined, Parent|undefined]>} */
+  /** @type {Array.<[Node, number|null|undefined, Parent|null|undefined]>} */
   const callLog = []
 
-  t.deepEqual(filter(tree, predicate), tree)
+  t.deepEqual(
+    filter(tree, (a, b, c) => {
+      callLog.push([a, b, c])
+      return true
+    }),
+    tree
+  )
 
   t.deepEqual(callLog, [
     [tree, undefined, undefined],
     [tree.children[0], 0, tree],
-    // @ts-ignore yeah, it exists.
+    // @ts-expect-error yeah, it exists.
     [tree.children[0].children[0], 0, tree.children[0]],
     [tree.children[1], 1, tree]
   ])
 
   t.end()
-
-  function predicate() {
-    callLog.push([].slice.call(arguments))
-    return true
-  }
 })
 
 test('should support type and node tests', (t) => {

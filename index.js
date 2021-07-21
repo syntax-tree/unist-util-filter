@@ -68,9 +68,9 @@ export const filter =
         if (node.children) {
           childIndex = -1
 
-          // @ts-ignore Looks like a parent.
+          // @ts-expect-error Looks like a parent.
           while (++childIndex < node.children.length) {
-            // @ts-ignore Looks like a parent.
+            // @ts-expect-error Looks like a parent.
             result = preorder(node.children[childIndex], childIndex, node)
 
             if (result) {
@@ -78,19 +78,19 @@ export const filter =
             }
           }
 
-          // @ts-ignore Looks like a parent.
+          // @ts-expect-error Looks like a parent.
           if (cascade && node.children.length > 0 && children.length === 0)
             return null
         }
 
         // Create a shallow clone, using the new children.
         /** @type {typeof node} */
-        // @ts-ignore all the fields will be copied over.
+        // @ts-expect-error all the fields will be copied over.
         const next = {}
 
         for (key in node) {
-          /* istanbul ignore else - Prototype injection. */
           if (own.call(node, key)) {
+            // @ts-expect-error: Looks like a record.
             next[key] = key === 'children' ? children : node[key]
           }
         }
