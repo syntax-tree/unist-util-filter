@@ -49,6 +49,7 @@ test('should cascade-remove parent nodes', function (t) {
    * @param {Node} node
    */
   function notOne(node) {
+    // @ts-expect-error: fine.
     return node.value !== '1'
   }
 
@@ -148,6 +149,7 @@ test('example from README', function (t) {
    * @param {Node} node
    */
   function predicate(node) {
+    // @ts-expect-error: fine.
     return node.type !== 'leaf' || Number(node.value) % 2 === 0
   }
 })

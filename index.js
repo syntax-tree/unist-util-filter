@@ -66,6 +66,7 @@ export const filter =
 
         if (!is(node, index, parent)) return null
 
+        // @ts-expect-error: Looks like a parent.
         if (node.children) {
           childIndex = -1
 
