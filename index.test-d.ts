@@ -1,7 +1,7 @@
 import {Node} from 'unist'
 import {expectType, expectError} from 'tsd'
-import {filter} from './index.js'
 import {Heading} from 'mdast'
+import {filter} from './index.js'
 
 expectError(filter())
 expectType<Node | null>(filter({type: 'root'}))
