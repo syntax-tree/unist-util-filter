@@ -1,12 +1,7 @@
-import {convert} from 'unist-util-is'
-
 /**
  * @typedef {import('unist').Node} Node
  * @typedef {import('unist').Parent} Parent
- *
- * @typedef {import('unist-util-is').Type} Type
- * @typedef {import('unist-util-is').Props} Props
- * @typedef {import('unist-util-is').TestFunctionAnything} TestFunctionAnything
+ * @typedef {import('unist-util-is').Test} Test
  */
 
 /**
@@ -16,25 +11,32 @@ import {convert} from 'unist-util-is'
  * @property {boolean} [cascade=true] Whether to drop parent nodes if they had children, but all their children were filtered out.
  */
 
+import {convert} from 'unist-util-is'
+
 const own = {}.hasOwnProperty
 
+/**
+ * Create a new tree consisting of copies of all nodes that pass test.
+ * The tree is walked in preorder (NLR), visiting the node itself, then its head, etc.
+ *
+ * @param tree Tree to filter.
+ * @param options Configuration (optional).
+ * @param test is-compatible test (such as a type).
+ * @returns Given `tree` or `null` if it didn’t pass `test`.
+ */
 export const filter =
   /**
    * @type {(
-   *  (<T extends Node>(node: Node, options: FilterOptions, test: T['type']|Partial<T>|import('unist-util-is').TestFunctionPredicate<T>|Array.<T['type']|Partial<T>|import('unist-util-is').TestFunctionPredicate<T>>) => T|null) &
-   *  (<T extends Node>(node: Node, test: T['type']|Partial<T>|import('unist-util-is').TestFunctionPredicate<T>|Array.<T['type']|Partial<T>|import('unist-util-is').TestFunctionPredicate<T>>) => T|null) &
-   *  ((node: Node, options: FilterOptions, test?: null|undefined|Type|Props|TestFunctionAnything|Array<Type|Props|TestFunctionAnything>) => Node|null) &
-   *  ((node: Node, test?: null|undefined|Type|Props|TestFunctionAnything|Array<Type|Props|TestFunctionAnything>) => Node|null)
+   *  (<Tree extends Node, Check extends Test>(node: Tree, options: FilterOptions, test: Check) => import('./complex-types').Matches<Tree, Check>) &
+   *  (<Tree extends Node, Check extends Test>(node: Tree, test: Check) => import('./complex-types').Matches<Tree, Check>) &
+   *  (<Tree extends Node>(node: Tree, options?: FilterOptions) => Tree)
    * )}
    */
   (
     /**
-     * Create a new tree consisting of copies of all nodes that pass test.
-     * The tree is walked in preorder (NLR), visiting the node itself, then its head, etc.
-     *
-     * @param {Node} tree Tree to filter
+     * @param {Node} tree
      * @param {FilterOptions} options
-     * @param {null|undefined|Type|Props|TestFunctionAnything|Array<Type|Props|TestFunctionAnything>} test is-compatible test (such as a type)
+     * @param {Test} test
      * @returns {Node|null}
      */
     function (tree, options, test) {

@@ -29,12 +29,14 @@
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
+    "complex-types.d.ts",
     "index.d.ts",
     "index.js"
   ],
   "dependencies": {
     "@types/unist": "^2.0.0",
-    "unist-util-is": "^5.0.0"
+    "unist-util-is": "^5.0.0",
+    "unist-util-visit-parents": "^5.0.0"
   },
   "devDependencies": {
     "@types/mdast": "^3.0.0",
@@ -53,7 +55,7 @@
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
-    "build": "rimraf \"*.d.ts\" && tsc && tsd && type-coverage",
+    "build": "rimraf \"{index,test}.d.ts\" && tsc && tsd && type-coverage",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "test-api": "node test.js",
     "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node test.js",
@@ -78,6 +80,11 @@
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,
-    "strict": true
+    "strict": true,
+    "ignoreCatch": true,
+    "#": "needed `any`s",
+    "ignoreFiles": [
+      "complex-types.d.ts"
+    ]
   }
 }
