@@ -8,18 +8,58 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**unist**][unist] utility to create a new tree with all nodes that pass the
-given test.
+[unist][] utility to create a new tree with only nodes that pass a test.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`filter(tree[, options][, test])`](#filtertree-options-test)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This is a small utility that helps you clean a tree.
+
+## When should I use this?
+
+You can use this utility to remove things from a tree.
+This utility is very similar to [`unist-util-remove`][unist-util-remove], which
+changes the given tree.
+Modifying a tree like that utility does is much faster on larger documents.
+
+You can also walk the tree with [`unist-util-visit`][unist-util-visit] to remove
+nodes.
+To create trees, use [`unist-builder`][unist-builder].
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, 16.0+, 18.0+), install with [npm][]:
 
 ```sh
 npm install unist-util-filter
+```
+
+In Deno with [`esm.sh`][esmsh]:
+
+```js
+import {filter} from "https://esm.sh/unist-util-filter@4"
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import {filter} from "https://esm.sh/unist-util-filter@4?bundle"
+</script>
 ```
 
 ## Use
@@ -30,7 +70,7 @@ import {filter} from 'unist-util-filter'
 
 const tree = u('root', [
   u('leaf', '1'),
-  u('node', [u('leaf', '2'), u('node', [u('leaf', '3')])]),
+  u('parent', [u('leaf', '2'), u('parent', [u('leaf', '3')])]),
   u('leaf', '4')
 ])
 
@@ -45,7 +85,7 @@ Yields:
 {
   type: 'root',
   children: [
-    {type: 'node', children: [{type: 'leaf', value: '2'}]},
+    {type: 'parent', children: [{type: 'leaf', value: '2'}]},
     {type: 'leaf', value: '4'}
   ]
 }
@@ -53,49 +93,61 @@ Yields:
 
 ## API
 
-This package exports the following identifiers: `filter`.
+This package exports the identifier `filter`.
 There is no default export.
 
 ### `filter(tree[, options][, test])`
 
-Create a new [tree][] consisting of copies of all nodes that pass `test`.
+Create a new `tree` ([`Node`][node]) of copies of all nodes that pass `test`.
+(`Test` from [`unist-util-is`][test]).
 The tree is walked in [preorder][] (NLR), visiting the node itself, then its
-[head][], etc.
+head, etc.
 
-###### Parameters
+##### `options`
 
-*   `tree` ([`Node?`][node])
-    — [Tree][] to filter
-*   `options.cascade` (`boolean`, default: `true`)
-    — Whether to drop parent nodes if they had children, but all their children
-    were filtered out
-*   `test` ([`Test`][is], optional) — [`is`][is]-compatible test (such as a
-    [type][])
+Configuration (optional).
+
+###### `options.cascade`
+
+Whether to drop parent nodes if they had children, but all their children were
+filtered out (`boolean`, default: `true`).
 
 ###### Returns
 
-[`Node?`][node] — New filtered [tree][].
+New filtered tree ([`Node?`][node]).
 `null` is returned if `tree` itself didn’t pass the test, or is cascaded away.
+
+## Types
+
+This package is fully typed with [TypeScript][].
+It exports the additional type `Options`.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Related
 
 *   [`unist-util-visit`](https://github.com/syntax-tree/unist-util-visit)
-    — Recursively walk over nodes
+    — walk the tree
 *   [`unist-util-visit-parents`](https://github.com/syntax-tree/unist-util-visit-parents)
-    — Like `visit`, but with a stack of parents
+    — walk the tree with a stack of parents
 *   [`unist-util-map`](https://github.com/syntax-tree/unist-util-map)
-    — Create a new tree with all nodes mapped by a given function
+    — create a new tree with all nodes mapped by a given function
 *   [`unist-util-flatmap`](https://gitlab.com/staltz/unist-util-flatmap)
-    — Create a new tree by mapping (to an array) by a given function
+    — create a new tree by mapping (to an array) by a given function
 *   [`unist-util-remove`](https://github.com/syntax-tree/unist-util-remove)
-    — Remove nodes from a tree that pass a test
+    — remove nodes from a tree that pass a test
 *   [`unist-util-select`](https://github.com/syntax-tree/unist-util-select)
-    — Select nodes with CSS-like selectors
+    — select nodes with CSS-like selectors
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
-started.
+See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
+ways to get started.
 See [`support.md`][support] for ways to get help.
 
 This project has a [code of conduct][coc].
@@ -136,24 +188,32 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[esmsh]: https://esm.sh
+
+[typescript]: https://www.typescriptlang.org
+
 [license]: license
 
-[unist]: https://github.com/syntax-tree/unist
-
-[node]: https://github.com/syntax-tree/unist#node
-
-[tree]: https://github.com/syntax-tree/unist#tree
-
-[preorder]: https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
-
-[head]: https://github.com/syntax-tree/unist#head
-
-[type]: https://github.com/syntax-tree/unist#type
-
-[is]: https://github.com/syntax-tree/unist-util-is
+[health]: https://github.com/syntax-tree/.github
 
 [contributing]: https://github.com/syntax-tree/.github/blob/HEAD/contributing.md
 
 [support]: https://github.com/syntax-tree/.github/blob/HEAD/support.md
 
 [coc]: https://github.com/syntax-tree/.github/blob/HEAD/code-of-conduct.md
+
+[unist]: https://github.com/syntax-tree/unist
+
+[node]: https://github.com/syntax-tree/unist#node
+
+[preorder]: https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
+
+[unist-util-remove]: https://github.com/syntax-tree/unist-util-remove
+
+[unist-util-visit]: https://github.com/syntax-tree/unist-util-visit
+
+[unist-builder]: https://github.com/syntax-tree/unist-builder
+
+[test]: https://github.com/syntax-tree/unist-util-is#test

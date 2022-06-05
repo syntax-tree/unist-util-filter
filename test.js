@@ -72,7 +72,7 @@ test('should not cascade-remove nodes that were empty initially', (t) => {
 
 test('should call iterator with `index` and `parent` args', (t) => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
-  /** @type {Array.<[Node, number|null|undefined, Parent|null|undefined]>} */
+  /** @type {Array<[Node, number|null|undefined, Parent|null|undefined]>} */
   const callLog = []
 
   t.deepEqual(

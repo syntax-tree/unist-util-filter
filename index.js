@@ -2,13 +2,15 @@
  * @typedef {import('unist').Node} Node
  * @typedef {import('unist').Parent} Parent
  * @typedef {import('unist-util-is').Test} Test
- */
-
-/**
- * Options for unist util filter
  *
- * @typedef {Object} FilterOptions
- * @property {boolean} [cascade=true] Whether to drop parent nodes if they had children, but all their children were filtered out.
+ * @typedef Options
+ *   Configuration (optional).
+ * @property {boolean} [cascade=true]
+ *   Whether to drop parent nodes if they had children, but all their children
+ *   were filtered out.
+ *
+ * @typedef {Options} FilterOptions
+ *   Deprecated, use `Options`.
  */
 
 import {convert} from 'unist-util-is'
@@ -16,26 +18,33 @@ import {convert} from 'unist-util-is'
 const own = {}.hasOwnProperty
 
 /**
- * Create a new tree consisting of copies of all nodes that pass test.
- * The tree is walked in preorder (NLR), visiting the node itself, then its head, etc.
+ * Create a new `tree` of copies of all nodes that pass `test`.
+ * The tree is walked in preorder (NLR), visiting the node itself, then its
+ * head, etc.
  *
- * @param tree Tree to filter.
- * @param options Configuration (optional).
- * @param test is-compatible test (such as a type).
- * @returns Given `tree` or `null` if it didn’t pass `test`.
+ * @param tree
+ *   Tree to filter.
+ * @param options
+ *   Configuration (optional).
+ * @param test
+ *   `unist-util-is`-compatible test (such as a type).
+ * @returns
+ *   New filtered tree.
+ *   `null` is returned if `tree` itself didn’t pass the test, or is cascaded
+ *   away.
  */
 export const filter =
   /**
    * @type {(
-   *  (<Tree extends Node, Check extends Test>(node: Tree, options: FilterOptions, test: Check) => import('./complex-types').Matches<Tree, Check>) &
+   *  (<Tree extends Node, Check extends Test>(node: Tree, options: Options, test: Check) => import('./complex-types').Matches<Tree, Check>) &
    *  (<Tree extends Node, Check extends Test>(node: Tree, test: Check) => import('./complex-types').Matches<Tree, Check>) &
-   *  (<Tree extends Node>(node: Tree, options?: FilterOptions) => Tree)
+   *  (<Tree extends Node>(node: Tree, options?: Options) => Tree)
    * )}
    */
   (
     /**
      * @param {Node} tree
-     * @param {FilterOptions} options
+     * @param {Options} options
      * @param {Test} test
      * @returns {Node|null}
      */
@@ -55,7 +64,7 @@ export const filter =
        * @returns {Node|null}
        */
       function preorder(node, index, parent) {
-        /** @type {Array.<Node>} */
+        /** @type {Array<Node>} */
         const children = []
         /** @type {number} */
         let childIndex
