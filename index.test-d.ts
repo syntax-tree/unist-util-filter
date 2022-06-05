@@ -5,7 +5,7 @@ import {filter} from './index.js'
 
 const root: Root = {type: 'root', children: []}
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-const justANode = {type: 'whatever'} as Node
+const justSomeNode = {type: 'whatever'} as Node
 const headingOrParagraph = {
   type: 'paragraph',
   children: []
@@ -44,15 +44,15 @@ expectType<Heading | null>(
 // Abstract types.
 // These don’t work well.
 // Use strict nodes types.
-expectType<Node>(filter(justANode))
-expectType<null>(filter(justANode, '???'))
-expectType<null>(filter(justANode, {cascade: false}, '???'))
+expectType<Node>(filter(justSomeNode))
+expectType<null>(filter(justSomeNode, '???'))
+expectType<null>(filter(justSomeNode, {cascade: false}, '???'))
 expectType<Node | null>(
-  filter(justANode, {cascade: false}, () => Math.random() > 0.5)
+  filter(justSomeNode, {cascade: false}, () => Math.random() > 0.5)
 )
 expectType<null>(
   filter(
-    justANode,
+    justSomeNode,
     {cascade: false},
     (node: Node): node is Heading => node.type === 'heading'
   )
