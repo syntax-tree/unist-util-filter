@@ -36,8 +36,8 @@ const own = {}.hasOwnProperty
 export const filter =
   /**
    * @type {(
-   *  (<Tree extends Node, Check extends Test>(node: Tree, options: Options, test: Check) => import('./complex-types').Matches<Tree, Check>) &
-   *  (<Tree extends Node, Check extends Test>(node: Tree, test: Check) => import('./complex-types').Matches<Tree, Check>) &
+   *  (<Tree extends Node, Check extends Test>(node: Tree, options: Options, test: Check) => import('./complex-types.js').Matches<Tree, Check>) &
+   *  (<Tree extends Node, Check extends Test>(node: Tree, test: Check) => import('./complex-types.js').Matches<Tree, Check>) &
    *  (<Tree extends Node>(node: Tree, options?: Options) => Tree)
    * )}
    */
