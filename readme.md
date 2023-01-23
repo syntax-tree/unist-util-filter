@@ -18,6 +18,7 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`filter(tree[, options][, test])`](#filtertree-options-test)
+    *   [`Options`](#options)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Related](#related)
@@ -42,7 +43,7 @@ To create trees, use [`unist-builder`][unist-builder].
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install unist-util-filter
@@ -51,14 +52,14 @@ npm install unist-util-filter
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {filter} from "https://esm.sh/unist-util-filter@4"
+import {filter} from 'https://esm.sh/unist-util-filter@4'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {filter} from "https://esm.sh/unist-util-filter@4?bundle"
+  import {filter} from 'https://esm.sh/unist-util-filter@4?bundle'
 </script>
 ```
 
@@ -93,40 +94,51 @@ Yields:
 
 ## API
 
-This package exports the identifier `filter`.
+This package exports the identifier [`filter`][filter].
 There is no default export.
 
 ### `filter(tree[, options][, test])`
 
-Create a new `tree` ([`Node`][node]) of copies of all nodes that pass `test`.
-(`Test` from [`unist-util-is`][test]).
-The tree is walked in [preorder][] (NLR), visiting the node itself, then its
+Create a new `tree` of copies of all nodes that pass `test`.
+
+The tree is walked in *[preorder][]* (NLR), visiting the node itself, then its
 head, etc.
 
-##### `options`
+###### Parameters
 
-Configuration (optional).
-
-###### `options.cascade`
-
-Whether to drop parent nodes if they had children, but all their children were
-filtered out (`boolean`, default: `true`).
+*   `tree` ([`Node`][node])
+    — tree to filter
+*   `options` ([`Options`][options], optional)
+    — configuration
+*   `test` ([`Test`][test], optional)
+    — `unist-util-is` compatible test
 
 ###### Returns
 
-New filtered tree ([`Node?`][node]).
+New filtered tree ([`Node`][node] or `null`).
+
 `null` is returned if `tree` itself didn’t pass the test, or is cascaded away.
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+*   `cascade` (`boolean`, default: `true`)
+    — whether to drop parent nodes if they had children, but all their
+    children were filtered out
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type `Options`.
+It exports the additional type [`Options`][options].
 
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Related
@@ -217,3 +229,7 @@ abide by its terms.
 [unist-builder]: https://github.com/syntax-tree/unist-builder
 
 [test]: https://github.com/syntax-tree/unist-util-is#test
+
+[filter]: #filtertree-options-test
+
+[options]: #options
