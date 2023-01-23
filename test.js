@@ -7,6 +7,15 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {u} from 'unist-builder'
 import {filter} from './index.js'
+import * as mod from './index.js'
+
+test('filter', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['filter'],
+    'should expose the public api'
+  )
+})
 
 test('should not traverse into children of filtered out nodes', () => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
