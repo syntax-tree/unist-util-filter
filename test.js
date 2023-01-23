@@ -3,19 +3,18 @@
  * @typedef {import('unist').Parent} Parent
  */
 
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {u} from 'unist-builder'
 import {filter} from './index.js'
 
-test('should not traverse into children of filtered out nodes', (t) => {
+test('should not traverse into children of filtered out nodes', () => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
   /** @type {Record<string, number>} */
   const types = {}
 
-  t.deepEqual(filter(tree, predicate), u('root', [u('leaf', '2')]))
-  t.deepEqual(types, {root: 1, node: 1, leaf: 1})
-
-  t.end()
+  assert.deepEqual(filter(tree, predicate), u('root', [u('leaf', '2')]))
+  assert.deepEqual(types, {root: 1, node: 1, leaf: 1})
 
   /**
    * @param {Node} node
@@ -26,25 +25,21 @@ test('should not traverse into children of filtered out nodes', (t) => {
   }
 })
 
-test('should return `null` if root node is filtered out', (t) => {
+test('should return `null` if root node is filtered out', () => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
-  t.deepEqual(filter(tree, predicate), null)
-
-  t.end()
+  assert.deepEqual(filter(tree, predicate), null)
 
   function predicate() {
     return false
   }
 })
 
-test('should cascade-remove parent nodes', (t) => {
+test('should cascade-remove parent nodes', () => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
-  t.deepEqual(filter(tree, notOne), u('root', [u('leaf', '2')]))
-  t.deepEqual(filter(tree, notLeaf), null)
-
-  t.end()
+  assert.deepEqual(filter(tree, notOne), u('root', [u('leaf', '2')]))
+  assert.deepEqual(filter(tree, notLeaf), null)
 
   /**
    * @param {Node} node
@@ -62,20 +57,18 @@ test('should cascade-remove parent nodes', (t) => {
   }
 })
 
-test('should not cascade-remove nodes that were empty initially', (t) => {
+test('should not cascade-remove nodes that were empty initially', () => {
   const tree = u('node', [u('node', []), u('node', [u('leaf')])])
 
-  t.deepEqual(filter(tree, 'node'), u('node', [u('node', [])]))
-
-  t.end()
+  assert.deepEqual(filter(tree, 'node'), u('node', [u('node', [])]))
 })
 
-test('should call iterator with `index` and `parent` args', (t) => {
+test('should call iterator with `index` and `parent` args', () => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
   /** @type {Array<[Node, number|null|undefined, Parent|null|undefined]>} */
   const callLog = []
 
-  t.deepEqual(
+  assert.deepEqual(
     filter(tree, (a, b, c) => {
       callLog.push([a, b, c])
       return true
@@ -83,46 +76,40 @@ test('should call iterator with `index` and `parent` args', (t) => {
     tree
   )
 
-  t.deepEqual(callLog, [
+  assert.deepEqual(callLog, [
     [tree, undefined, undefined],
     [tree.children[0], 0, tree],
     // @ts-expect-error yeah, it exists.
     [tree.children[0].children[0], 0, tree.children[0]],
     [tree.children[1], 1, tree]
   ])
-
-  t.end()
 })
 
-test('should support type and node tests', (t) => {
+test('should support type and node tests', () => {
   const tree = u('node', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
-  t.deepEqual(filter(tree, 'node'), null)
-  t.deepEqual(
+  assert.deepEqual(filter(tree, 'node'), null)
+  assert.deepEqual(
     filter(tree, {cascade: false}, 'node'),
     u('node', [u('node', [])])
   )
-  t.deepEqual(filter(tree, {cascade: false}, 'leaf'), null)
-
-  t.end()
+  assert.deepEqual(filter(tree, {cascade: false}, 'leaf'), null)
 })
 
-test('opts.cascade', (t) => {
+test('opts.cascade', () => {
   const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
-  t.deepEqual(
+  assert.deepEqual(
     filter(tree, {cascade: true}, predicate),
     null,
     'opts.cascade = true'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     filter(tree, {cascade: false}, predicate),
     u('root', [u('node', [])]),
     'opts.cascade = false'
   )
-
-  t.end()
 
   /**
    * @param {Node} node
@@ -132,20 +119,18 @@ test('opts.cascade', (t) => {
   }
 })
 
-test('example from README', (t) => {
+test('example from README', () => {
   const tree = u('root', [
     u('leaf', '1'),
     u('node', [u('leaf', '2'), u('node', [u('leaf', '3')])]),
     u('leaf', '4')
   ])
 
-  t.deepEqual(
+  assert.deepEqual(
     filter(tree, predicate),
     u('root', [u('node', [u('leaf', '2')]), u('leaf', '4')]),
     'example from readme'
   )
-
-  t.end()
 
   /**
    * @param {Node} node
