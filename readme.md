@@ -115,9 +115,10 @@ head, etc.
 
 ###### Returns
 
-New filtered tree ([`Node`][node] or `null`).
+New filtered tree ([`Node`][node] or `undefined`).
 
-`null` is returned if `tree` itself didn’t pass the test, or is cascaded away.
+`undefined` is returned if `tree` itself didn’t pass the test, or is cascaded
+away.
 
 ### `Options`
 

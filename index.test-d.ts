@@ -18,24 +18,24 @@ expectType<Root>(filter(root, 'root'))
 expectType<Root>(filter(root, {}, 'root'))
 expectError(filter(root, {notAnOption: true}, 'root'))
 expectType<Root>(filter(root, {cascade: false}, 'root'))
-expectType<null>(filter(root, 'heading'))
-expectType<null>(filter(root, {cascade: false}, 'notAHeading'))
+expectType<undefined>(filter(root, 'heading'))
+expectType<undefined>(filter(root, {cascade: false}, 'notAHeading'))
 
 // Vague types.
 expectType<Heading | Paragraph>(filter(headingOrParagraph))
-expectType<Paragraph | null>(filter(headingOrParagraph, 'paragraph'))
-expectType<null>(filter(headingOrParagraph, 'notAHeading'))
-expectType<Heading | null>(
+expectType<Paragraph | undefined>(filter(headingOrParagraph, 'paragraph'))
+expectType<undefined>(filter(headingOrParagraph, 'notAHeading'))
+expectType<Heading | undefined>(
   filter(headingOrParagraph, {cascade: false}, 'heading')
 )
 
-expectType<Heading | Paragraph | null>(
+expectType<Heading | Paragraph | undefined>(
   filter(headingOrParagraph, {cascade: false}, function () {
     return Math.random() > 0.5
   })
 )
 
-expectType<Heading | null>(
+expectType<Heading | undefined>(
   filter(
     headingOrParagraph,
     {cascade: false},
@@ -47,14 +47,14 @@ expectType<Heading | null>(
 // These don’t work well.
 // Use strict nodes types.
 expectType<Node>(filter(justSomeNode))
-expectType<null>(filter(justSomeNode, '???'))
-expectType<null>(filter(justSomeNode, {cascade: false}, '???'))
-expectType<Node | null>(
+expectType<undefined>(filter(justSomeNode, '???'))
+expectType<undefined>(filter(justSomeNode, {cascade: false}, '???'))
+expectType<Node | undefined>(
   filter(justSomeNode, {cascade: false}, function () {
     return Math.random() > 0.5
   })
 )
-expectType<null>(
+expectType<undefined>(
   filter(
     justSomeNode,
     {cascade: false},

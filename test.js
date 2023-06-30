@@ -34,11 +34,11 @@ test('filter', async function (t) {
   )
 
   await t.test(
-    'should return `null` if root node is filtered out',
+    'should return `undefined` if root node is filtered out',
     function () {
       const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
-      assert.deepEqual(filter(tree, predicate), null)
+      assert.deepEqual(filter(tree, predicate), undefined)
 
       function predicate() {
         return false
@@ -50,7 +50,7 @@ test('filter', async function (t) {
     const tree = u('root', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
     assert.deepEqual(filter(tree, notOne), u('root', [u('leaf', '2')]))
-    assert.deepEqual(filter(tree, notLeaf), null)
+    assert.deepEqual(filter(tree, notLeaf), undefined)
 
     /**
      * @param {Node} node
@@ -106,12 +106,12 @@ test('filter', async function (t) {
   await t.test('should support type and node tests', function () {
     const tree = u('node', [u('node', [u('leaf', '1')]), u('leaf', '2')])
 
-    assert.deepEqual(filter(tree, 'node'), null)
+    assert.deepEqual(filter(tree, 'node'), undefined)
     assert.deepEqual(
       filter(tree, {cascade: false}, 'node'),
       u('node', [u('node', [])])
     )
-    assert.deepEqual(filter(tree, {cascade: false}, 'leaf'), null)
+    assert.deepEqual(filter(tree, {cascade: false}, 'leaf'), undefined)
   })
 
   await t.test('opts.cascade', function () {
@@ -119,7 +119,7 @@ test('filter', async function (t) {
 
     assert.deepEqual(
       filter(tree, {cascade: true}, predicate),
-      null,
+      undefined,
       'opts.cascade = true'
     )
 

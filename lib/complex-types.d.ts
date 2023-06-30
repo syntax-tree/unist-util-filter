@@ -11,19 +11,19 @@ type MatchesOne<Value, Check> =
       ? Check extends (value: any) => value is infer Inferred
         ? Value extends Inferred
           ? Value
-          : null
+          : undefined
         : // This test function isn’t a type predicate.
-          Value | null
+          Value | undefined
       : // String (type) test.
       Value['type'] extends Check
       ? Value extends {type: Check}
         ? Value
-        : Value | null
+        : Value | undefined
       : // Partial test.
       Value extends Check
       ? Value
-      : null
-    : null
+      : undefined
+    : undefined
 
 export type Matches<Value, Check> =
   // Is this a list?
