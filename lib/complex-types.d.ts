@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
-
 import type {Node, Parent} from 'unist'
 
 type MatchesOne<Value, Check> =
@@ -35,5 +33,3 @@ export type Matches<Value, Check> =
   Check extends any[]
     ? MatchesOne<Value, Check[keyof Check]>
     : MatchesOne<Value, Check>
-
-/* eslint-enable @typescript-eslint/ban-types */

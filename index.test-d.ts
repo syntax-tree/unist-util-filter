@@ -1,6 +1,6 @@
+import type {Root, Heading, Paragraph} from 'mdast'
 import {expectType, expectError} from 'tsd'
-import {Node} from 'unist'
-import {Root, Heading, Paragraph} from 'mdast'
+import type {Node} from 'unist'
 import {filter} from './index.js'
 
 const root: Root = {type: 'root', children: []}
