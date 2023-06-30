@@ -1,7 +1,7 @@
 import type {Heading, Paragraph, Root} from 'mdast'
 import {expectError, expectType} from 'tsd'
 import type {Node} from 'unist'
-import {filter} from './index.js'
+import {filter} from 'unist-util-filter'
 
 const root: Root = {type: 'root', children: []}
 /* eslint-disable @typescript-eslint/consistent-type-assertions */

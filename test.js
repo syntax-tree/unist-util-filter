@@ -6,11 +6,13 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {u} from 'unist-builder'
-import {filter} from './index.js'
+import {filter} from 'unist-util-filter'
 
 test('filter', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('./index.js')).sort(), ['filter'])
+    assert.deepEqual(Object.keys(await import('unist-util-filter')).sort(), [
+      'filter'
+    ])
   })
 
   await t.test(
