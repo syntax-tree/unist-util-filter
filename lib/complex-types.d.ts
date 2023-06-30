@@ -4,10 +4,7 @@ type MatchesOne<Value, Check> =
   // Is this a node?
   Value extends Node
     ? // No test.
-      Check extends null
-      ? Value
-      : // No test.
-      Check extends undefined
+      Check extends null | undefined
       ? Value
       : // Function test.
       Check extends Function

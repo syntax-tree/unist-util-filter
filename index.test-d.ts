@@ -1,5 +1,5 @@
-import type {Root, Heading, Paragraph} from 'mdast'
-import {expectType, expectError} from 'tsd'
+import type {Heading, Paragraph, Root} from 'mdast'
+import {expectError, expectType} from 'tsd'
 import type {Node} from 'unist'
 import {filter} from './index.js'
 
@@ -30,7 +30,9 @@ expectType<Heading | null>(
 )
 
 expectType<Heading | Paragraph | null>(
-  filter(headingOrParagraph, {cascade: false}, () => Math.random() > 0.5)
+  filter(headingOrParagraph, {cascade: false}, function () {
+    return Math.random() > 0.5
+  })
 )
 
 expectType<Heading | null>(
@@ -48,7 +50,9 @@ expectType<Node>(filter(justSomeNode))
 expectType<null>(filter(justSomeNode, '???'))
 expectType<null>(filter(justSomeNode, {cascade: false}, '???'))
 expectType<Node | null>(
-  filter(justSomeNode, {cascade: false}, () => Math.random() > 0.5)
+  filter(justSomeNode, {cascade: false}, function () {
+    return Math.random() > 0.5
+  })
 )
 expectType<null>(
   filter(
