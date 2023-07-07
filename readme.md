@@ -52,14 +52,14 @@ npm install unist-util-filter
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {filter} from 'https://esm.sh/unist-util-filter@4'
+import {filter} from 'https://esm.sh/unist-util-filter@5'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {filter} from 'https://esm.sh/unist-util-filter@4?bundle'
+  import {filter} from 'https://esm.sh/unist-util-filter@5?bundle'
 </script>
 ```
 
