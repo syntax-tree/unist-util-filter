@@ -1,4 +1,4 @@
-import type {Node, Parent} from 'unist'
+import type {Node} from 'unist'
 
 type MatchesOne<Value, Check> =
   // Is this a node?
